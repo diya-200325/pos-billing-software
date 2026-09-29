@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import re
 import math
+import os
 import uuid
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
-app.secret_key = "pos-secret-key"
+app.secret_key = os.environ.get("SECRET_KEY", "pos-secret-key")
 
 
 # ============================================================
@@ -2732,7 +2733,8 @@ def internal_server_error(error):
 # ============================================================
 # START APPLICATION
 # ============================================================
-
+create_database()
+create_default_users()
 if __name__ == "__main__":
 
     create_database()
