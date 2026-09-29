@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mobile Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            font-family: Arial, sans-serif;
+        }
+
+        .mobile-wrapper {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            margin: auto;
+            background: white;
+        }
+
+        .mobile-header {
+            background: #1f2937;
+            color: white;
+            padding: 24px 20px;
+        }
+
+        .mobile-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .mobile-header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .mobile-content {
+            padding: 20px;
+        }
+
+        .welcome-card {
+            background: #f3f4f6;
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-card h2 {
+            margin: 0 0 6px;
+            font-size: 18px;
+        }
+
+        .welcome-card p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .menu-card {
+            text-decoration: none;
+            color: #222;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 20px 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .menu-title {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .logout-card {
+            display: block;
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            background: #dc2626;
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 360px) {
+
+            .mobile-content {
+                padding: 14px;
+            }
+
+            .menu-grid {
+                gap: 10px;
+            }
+
+            .menu-card {
+                padding: 16px 8px;
+            }
+
+            .menu-icon {
+                font-size: 26px;
+            }
+
+            .menu-title {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="mobile-wrapper">
+
+    <div class="mobile-header">
+
+        <h1>POS Admin</h1>
+
+        <p>Mobile Administration Portal</p>
+
+    </div>
+
+
+    <div class="mobile-content">
+
+        <div class="welcome-card">
+
+            <h2>
+                Welcome, {{ session["user_name"] }}
+            </h2>
+
+            <p>
+                Manage your POS system from your mobile device.
+            </p>
+
+        </div>
+
+
+        <div class="menu-grid">
+
+            <a href="/admin" class="menu-card">
+
+                <div class="menu-icon">📊</div>
+
+                <div class="menu-title">
+                    Dashboard
+                </div>
+
+            </a>
+
+
+            <a href="/products" class="menu-card">
+
+                <div class="menu-icon">📦</div>
+
+                <div class="menu-title">
+                    Products
+                </div>
+
+            </a>
+
+
+            <a href="/staff-management" class="menu-card">
+
+                <div class="menu-icon">👥</div>
+
+                <div class="menu-title">
+                    Staff
+                </div>
+
+            </a>
+
+
+            <a href="/suppliers" class="menu-card">
+
+                <div class="menu-icon">🚚</div>
+
+                <div class="menu-title">
+                    Suppliers
+                </div>
+
+            </a>
+
+
+            <a href="/transactions" class="menu-card">
+
+                <div class="menu-icon">🧾</div>
+
+                <div class="menu-title">
+                    Transactions
+                </div>
+
+            </a>
+
+
+            <a href="/returns" class="menu-card">
+
+                <div class="menu-icon">↩️</div>
+
+                <div class="menu-title">
+                    Returns
+                </div>
+
+            </a>
+
+
+            <a href="/reports" class="menu-card">
+
+                <div class="menu-icon">📈</div>
+
+                <div class="menu-title">
+                    Reports
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <a href="/logout" class="logout-card">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

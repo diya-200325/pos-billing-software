@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Checkout</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+        }
+
+        .checkout-section {
+            min-width: 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-item p {
+            margin: 6px 0 0;
+        }
+
+        .payment-form select,
+        .payment-form input {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .amount-box {
+            padding: 15px;
+            margin: 10px 0 20px;
+            border-radius: 8px;
+            background: #f4f6f8;
+        }
+
+        .amount-box h2 {
+            margin-bottom: 0;
+        }
+
+        .confirm-payment {
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 800px) {
+
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 22px;
+            }
+
+            .topbar p {
+                font-size: 14px;
+            }
+
+            .section h2 {
+                font-size: 19px;
+            }
+
+            .order-item {
+                align-items: flex-start;
+            }
+
+            .order-item strong:last-child {
+                white-space: nowrap;
+            }
+
+            .payment-form select,
+            .payment-form input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .confirm-payment {
+                padding: 12px;
+            }
+
+            .back-button {
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/billing">Billing</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Checkout</h1>
+
+            <p>
+                Review your order and complete the payment.
+            </p>
+
+        </div>
+
+
+        <div class="checkout-layout">
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="section checkout-section">
+
+                <h2>Order Summary</h2>
+
+
+                {% for item in cart %}
+
+                <div class="order-item">
+
+                    <div>
+
+                        <strong>
+                            {{ item["name"] }}
+                        </strong>
+
+                        <p>
+                            ₹{{ "%.2f"|format(item["price"]) }}
+                            ×
+                            {{ item["quantity"] }}
+                        </p>
+
+                    </div>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(item["price"] * item["quantity"]) }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+
+                <div class="cart-total">
+
+                    Total:
+                    ₹{{ "%.2f"|format(total) }}
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="section checkout-section">
+
+                <h2>Payment</h2>
+
+
+                <form
+                    action="/payment"
+                    method="POST"
+                    class="payment-form"
+                >
+
+                    <label>
+                        Payment Method
+                    </label>
+
+                    <select
+                        name="payment_method"
+                        required
+                    >
+
+                        <option value="">
+                            Select Payment Method
+                        </option>
+
+                        <option value="Cash">
+                            Cash
+                        </option>
+
+                        <option value="UPI">
+                            UPI
+                        </option>
+
+                        <option value="Card">
+                            Card
+                        </option>
+
+                    </select>
+
+
+                    <label>
+                        Amount Paid
+                    </label>
+
+                    <input
+                        type="number"
+                        name="amount_paid"
+                        step="0.01"
+                        min="{{ total }}"
+                        placeholder="Enter amount received"
+                        required
+                    >
+
+
+                    <div class="amount-box">
+
+                        <strong>
+                            Amount to Pay
+                        </strong>
+
+                        <h2>
+                            ₹{{ "%.2f"|format(total) }}
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-success confirm-payment"
+                    >
+                        Confirm Payment
+                    </button>
+
+                </form>
+
+
+                <a
+                    href="/billing"
+                    class="btn back-button"
+                >
+                    ← Back to Billing
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

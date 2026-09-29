@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Returns</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .return-form {
+            max-width: 700px;
+        }
+
+        .return-form select,
+        .return-form input[type="number"] {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .return-form button {
+            margin-top: 5px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table-container table {
+            min-width: 750px;
+        }
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 22px;
+            }
+
+            .topbar p {
+                font-size: 14px;
+            }
+
+            .section {
+                margin-bottom: 15px;
+            }
+
+            .section h2 {
+                font-size: 19px;
+            }
+
+            .return-form {
+                max-width: 100%;
+            }
+
+            .return-form select,
+            .return-form input[type="number"] {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .return-form button {
+                width: 100%;
+            }
+
+            .table-container {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/staff-management">Staff</a>
+
+        <a href="/suppliers">Suppliers</a>
+
+        <a href="/transactions">Transactions</a>
+
+        <a href="/returns">Returns</a>
+
+        <a href="/reports">Reports</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Product Returns</h1>
+
+            <p>
+                Process returned products and manage refunds.
+            </p>
+
+        </div>
+
+
+        <!-- PROCESS RETURN -->
+
+        <div class="section">
+
+            <h2>Process Return</h2>
+
+            <form
+                action="/returns/process"
+                method="POST"
+                class="return-form"
+            >
+
+                <label>
+                    Invoice / Product
+                </label>
+
+                <select
+                    name="return_item"
+                    id="return_item"
+                    required
+                >
+
+                    <option value="">
+                        Select invoice and product
+                    </option>
+
+                    {% for item in return_items %}
+
+                        {% set remaining = item[4] - item[6] %}
+
+                        {% if remaining > 0 %}
+
+                        <option
+                            value="{{ item[0] }}-{{ item[1] }}"
+                        >
+
+                            {{ item[2] }}
+                            -
+                            {{ item[3] }}
+                            -
+                            Sold: {{ item[4] }}
+                            -
+                            Remaining: {{ remaining }}
+
+                        </option>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </select>
+
+
+                <input
+                    type="hidden"
+                    name="transaction_id"
+                    id="transaction_id"
+                >
+
+
+                <input
+                    type="hidden"
+                    name="product_id"
+                    id="product_id"
+                >
+
+
+                <label>
+                    Return Quantity
+                </label>
+
+                <input
+                    type="number"
+                    name="quantity"
+                    min="1"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+                    Process Return
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- RETURN HISTORY -->
+
+        <div class="section">
+
+            <h2>Return History</h2>
+
+            {% if returns %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Invoice</th>
+
+                        <th>Product</th>
+
+                        <th>Quantity</th>
+
+                        <th>Refund</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+
+                    {% for item in returns %}
+
+                    <tr>
+
+                        <td>
+                            {{ item[0] }}
+                        </td>
+
+                        <td>
+                            {{ item[1] }}
+                        </td>
+
+                        <td>
+                            {{ item[2] }}
+                        </td>
+
+                        <td>
+                            {{ item[3] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(item[4]) }}
+                        </td>
+
+                        <td>
+                            {{ item[5] }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p>
+                No returns have been processed yet.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const returnItem =
+            document.getElementById("return_item");
+
+        const transactionId =
+            document.getElementById("transaction_id");
+
+        const productId =
+            document.getElementById("product_id");
+
+
+        returnItem.addEventListener("change", function () {
+
+            if (!this.value) {
+
+                transactionId.value = "";
+
+                productId.value = "";
+
+                return;
+
+            }
+
+
+            const values = this.value.split("-");
+
+
+            transactionId.value = values[0];
+
+            productId.value = values[1];
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>POS Billing System</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="home-container">
+
+        <div class="home-card">
+
+            <h1>POS Billing System</h1>
+
+            <p>
+                Simple and efficient billing and business management system
+            </p>
+
+            <div class="portal-container">
+
+                <div class="portal-card">
+
+                    <h2>Admin Panel</h2>
+
+                    <p>
+                        Manage products, staff, suppliers, transactions,
+                        returns and reports.
+                    </p>
+
+                    <a
+                        href="/admin-login"
+                        class="btn btn-primary"
+                    >
+                        Admin Sign In
+                    </a>
+
+                </div>
+
+
+                <div class="portal-card">
+
+                    <h2>Staff / Cashier</h2>
+
+                    <p>
+                        Create bills, manage the cart, process payments
+                        and print invoices.
+                    </p>
+
+                    <a
+                        href="/staff-login"
+                        class="btn btn-success"
+                    >
+                        Staff Sign In
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

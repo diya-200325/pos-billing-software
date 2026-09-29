@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Add Staff</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/staff-management">Staff</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/transactions">Transactions</a>
+        <a href="/returns">Returns</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Add Staff</h1>
+
+            <p>Create a new staff account.</p>
+
+        </div>
+
+
+        <div class="section">
+
+            <form method="POST">
+
+                <label>Name</label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="name"
+                    required
+                >
+
+                <br><br>
+
+                <label>Email</label>
+
+                <br>
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                >
+
+                <br><br>
+
+                <label>Password</label>
+
+                <br>
+
+                <input
+                    type="password"
+                    name="password"
+                    required
+                >
+
+                <br><br>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Create Staff
+                </button>
+
+                <a
+                    href="/staff-management"
+                    class="btn"
+                >
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

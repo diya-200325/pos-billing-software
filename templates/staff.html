@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Staff Management</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table-container table {
+            min-width: 700px;
+        }
+
+        .staff-actions {
+            display: flex;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .add-staff-btn {
+            display: inline-block;
+        }
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 22px;
+            }
+
+            .topbar p {
+                font-size: 14px;
+            }
+
+            .add-staff-btn {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .section h2 {
+                font-size: 19px;
+            }
+
+            .table-container {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/staff-management">Staff</a>
+
+        <a href="/suppliers">Suppliers</a>
+
+        <a href="/transactions">Transactions</a>
+
+        <a href="/returns">Returns</a>
+
+        <a href="/reports">Reports</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Staff Management</h1>
+
+            <p>
+                Manage cashier and staff accounts.
+            </p>
+
+        </div>
+
+
+        <div class="section">
+
+            <a
+                href="/staff/add"
+                class="btn btn-primary add-staff-btn"
+            >
+                + Add Staff
+            </a>
+
+        </div>
+
+
+        <div class="section">
+
+            <h2>Staff List</h2>
+
+            {% if staff %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Role</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+
+                    {% for person in staff %}
+
+                    <tr>
+
+                        <td>
+                            {{ person[0] }}
+                        </td>
+
+                        <td>
+                            {{ person[1] }}
+                        </td>
+
+                        <td>
+                            {{ person[2] }}
+                        </td>
+
+                        <td>
+                            {{ person[3] }}
+                        </td>
+
+                        <td>
+
+                            <div class="staff-actions">
+
+                                <a
+                                    href="/staff/edit/{{ person[0] }}"
+                                    class="btn btn-primary"
+                                >
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="/staff/delete/{{ person[0] }}"
+                                    class="btn btn-danger"
+                                    onclick="return confirm('Delete this staff account?')"
+                                >
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p>
+                No staff accounts found.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

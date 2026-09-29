@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Add Product</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/staff-management">Staff</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/transactions">Transactions</a>
+        <a href="/returns">Returns</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Add Product</h1>
+
+            <p>Add a new product to inventory.</p>
+
+        </div>
+
+
+        <div class="section">
+
+            <form method="POST">
+
+                <label>Product Name</label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="name"
+                    required
+                >
+
+                <br><br>
+
+                <label>Category</label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="category"
+                    required
+                >
+
+                <br><br>
+
+                <label>Price</label>
+
+                <br>
+
+                <input
+                    type="number"
+                    name="price"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+
+                <br><br>
+
+                <label>Stock</label>
+
+                <br>
+
+                <input
+                    type="number"
+                    name="stock"
+                    min="0"
+                    required
+                >
+
+                <br><br>
+
+                <label>Supplier</label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="supplier"
+                >
+
+                <br><br>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Add Product
+                </button>
+
+                <a
+                    href="/products"
+                    class="btn"
+                >
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

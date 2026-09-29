@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Reports & Ledger</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/staff-management">Staff</a>
+
+        <a href="/suppliers">Suppliers</a>
+
+        <a href="/transactions">Transactions</a>
+
+        <a href="/returns">Returns</a>
+
+        <a href="/reports">Reports</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Reports & Ledger</h1>
+
+            <p>
+                View detailed sales reports and financial transactions.
+            </p>
+
+        </div>
+
+
+        <!-- SALES SUMMARY -->
+
+        <div class="section">
+
+            <h2>Sales Report</h2>
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>Total Sales</h3>
+
+                    <p>
+                        ₹{{ "%.2f"|format(total_sales) }}
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Total Transactions</h3>
+
+                    <p>
+                        {{ total_transactions }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT SUMMARY -->
+
+        <div class="section">
+
+            <h2>Payment Summary</h2>
+
+            <table>
+
+                <tr>
+
+                    <th>Payment Method</th>
+
+                    <th>Transactions</th>
+
+                    <th>Total Amount</th>
+
+                </tr>
+
+
+                {% for payment in payment_summary %}
+
+                <tr>
+
+                    <td>
+                        {{ payment[0] }}
+                    </td>
+
+                    <td>
+                        {{ payment[1] }}
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(payment[2]) }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+
+        <!-- SALES DETAILS -->
+
+        <div class="section">
+
+            <h2>Sales Details</h2>
+
+            {% if sales %}
+
+            <table>
+
+                <tr>
+
+                    <th>Invoice</th>
+
+                    <th>Staff</th>
+
+                    <th>Total</th>
+
+                    <th>Payment</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+
+                {% for sale in sales %}
+
+                <tr>
+
+                    <td>
+                        {{ sale[0] }}
+                    </td>
+
+                    <td>
+                        {{ sale[1] }}
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(sale[2]) }}
+                    </td>
+
+                    <td>
+                        {{ sale[3] }}
+                    </td>
+
+                    <td>
+                        {{ sale[4] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+
+            <p>
+                No sales transactions found.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- LEDGER -->
+
+        <div class="section">
+
+            <h2>Sales Ledger</h2>
+
+            {% if ledger %}
+
+            <table>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Invoice</th>
+
+                    <th>Description</th>
+
+                    <th>Payment Method</th>
+
+                    <th>Amount</th>
+
+                </tr>
+
+
+                {% for entry in ledger %}
+
+                <tr>
+
+                    <td>
+                        {{ entry[0] }}
+                    </td>
+
+                    <td>
+                        {{ entry[1] }}
+                    </td>
+
+                    <td>
+                        {{ entry[2] }}
+                    </td>
+
+                    <td>
+                        {{ entry[3] }}
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(entry[4]) }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+
+            <p>
+                No ledger entries found.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

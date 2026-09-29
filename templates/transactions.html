@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Transactions</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table-container table {
+            min-width: 950px;
+        }
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 22px;
+            }
+
+            .topbar p {
+                font-size: 14px;
+            }
+
+            .section {
+                margin-bottom: 15px;
+            }
+
+            .table-container {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/staff-management">Staff</a>
+
+        <a href="/suppliers">Suppliers</a>
+
+        <a href="/transactions">Transactions</a>
+
+        <a href="/returns">Returns</a>
+
+        <a href="/reports">Reports</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Transactions / Ledger</h1>
+
+            <p>
+                View completed sales and payment records.
+            </p>
+
+        </div>
+
+
+        <div class="section">
+
+            {% if transactions %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Invoice</th>
+
+                        <th>Staff</th>
+
+                        <th>Total</th>
+
+                        <th>Payment</th>
+
+                        <th>Paid</th>
+
+                        <th>Change</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+
+                    {% for transaction in transactions %}
+
+                    <tr>
+
+                        <td>
+                            {{ transaction[0] }}
+                        </td>
+
+                        <td>
+                            {{ transaction[1] }}
+                        </td>
+
+                        <td>
+                            {{ transaction[2] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(transaction[3]) }}
+                        </td>
+
+                        <td>
+                            {{ transaction[4] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(transaction[5]) }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(transaction[6]) }}
+                        </td>
+
+                        <td>
+                            {{ transaction[7] }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p>
+                No transactions found.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

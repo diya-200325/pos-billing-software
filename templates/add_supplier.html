@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Add Supplier</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>POS SYSTEM</h2>
+
+        <a href="/admin">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/staff-management">Staff</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/transactions">Transactions</a>
+        <a href="/returns">Returns</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <div class="main-content">
+
+        <div class="topbar">
+
+            <h1>Add Supplier</h1>
+
+            <p>Add a new supplier.</p>
+
+        </div>
+
+        <div class="section">
+
+            <form method="POST">
+
+                <label>Name</label>
+                <br>
+
+                <input type="text" name="name" required>
+
+                <br><br>
+
+                <label>Phone</label>
+                <br>
+
+                <input type="text" name="phone">
+
+                <br><br>
+
+                <label>Email</label>
+                <br>
+
+                <input type="email" name="email">
+
+                <br><br>
+
+                <label>Address</label>
+                <br>
+
+                <textarea name="address" rows="4"></textarea>
+
+                <br><br>
+
+                <button type="submit" class="btn btn-primary">
+                    Add Supplier
+                </button>
+
+                <a href="/suppliers" class="btn">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
