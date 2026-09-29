@@ -331,7 +331,7 @@ def admin_login():
 # MOBILE ADMIN
 # ============================================================
 
-@app.route("/admin-mobile")
+@app.route("/admin/mobile")
 def admin_mobile():
 
     if "user_id" not in session:
@@ -418,11 +418,6 @@ def staff_login():
 # ============================================================
 # ADMIN DASHBOARD
 # ============================================================
-@app.route("/admin/mobile")
-def admin_mobile():
-    if session.get("role") != "admin":
-        return redirect(url_for("admin_login"))
-    return render_template("admin_mobile.html")
 @app.route("/admin")
 def admin_dashboard():
 
